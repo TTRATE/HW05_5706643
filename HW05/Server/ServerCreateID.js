@@ -3,9 +3,9 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host: 'pannawatdata.ck2codzcnj4m.ap-southeast-1.rds.amazonaws.com',
+    host: '-----',
     user: 'pannawat',
-    password: 'ttr987654321',
+    password: '****',
     database: 'HW05_IDdata'
 
 });
@@ -24,9 +24,6 @@ app.get('/user/add', function (req, res) {
     var password = req.query.password;
     var score = req.query.score;
 
-
-
-
     var ID = [[userID, password,score]];
     AddUserID(ID, function (err, resualt) {
         res.end(resualt);
@@ -36,6 +33,15 @@ app.get('/user/add', function (req, res) {
 app.get('/user/id',function(req,res){
 
     ShowUserID(function(err,resualt){
+        res.end(resualt);
+    })
+})
+
+app.get('/user/login/name',function(req,res){
+
+    var login =req.query.userID;
+
+    LoginUserID(login,function(err,resualt){
         res.end(resualt);
     })
 })
@@ -71,5 +77,18 @@ function AddUserID(ID, callback) {
         json = JSON.stringify(rows);
 
         callback(null,json);
+    });
+    }
+    function LoginUserID(namelog,callback) {
+        var sql = 'SELECT userID FROM user WHERE userID = ?';
+
+        
+        connection.query(sql,namelog, function (err,rows,fields) {
+            if (err) throw err;
+
+        json = JSON.stringify(rows);
+
+        callback(null,json);
+        
     });
     }
