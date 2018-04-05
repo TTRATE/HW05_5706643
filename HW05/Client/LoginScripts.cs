@@ -11,10 +11,11 @@ using Newtonsoft.Json.Converters;
 
 public class LoginScripts : MonoBehaviour {
 
-    public string URL = "http://localhost:8081/user/id";
+    public string URL;
     public InputField userIDEnter;
     public InputField passwordEnter;
 
+    private string loginUser;
     private string userIDkey;
     private string passwordkey;
 
@@ -29,10 +30,12 @@ public class LoginScripts : MonoBehaviour {
     // Update is called once per frame
     public void LoginToBorad()
     {
+
         userIDkey = userIDEnter.text;
         passwordkey = passwordEnter.text;
-        
 
+        loginUser = "http://localhost:8081/user/login/" + userIDkey;
+        URL = loginUser;
 
         try
         {
@@ -43,10 +46,32 @@ public class LoginScripts : MonoBehaviour {
 
             print(responseBody);
 
+           /* UserID log = JsonConvert.DeserializeObject<UserID>(responseBody);
+            print(log);*/
             UserID[] userIDs = JsonConvert.DeserializeObject<UserID[]>(responseBody);
-            print(userIDs[0].userID);
+            
+            if(userIDkey == userIDs[0].userID)
+            {
+                if(passwordkey == userIDs[0].password)
+                {
+                    print("True");
+                    btn.LogToBoard();
+                    ldb.ShowList();
+                }
+                else
+                {
+                    print("passF");
+                }
+                
+            }
+            else
+            {
+                print("userF");
 
-            for (int i = 0; i < userIDs.Length; i++)
+            }
+            
+
+            /*for (int i = 0; i < userIDs.Length; i++)
             {
                if(userIDkey == userIDs[i].userID)
                 {
@@ -63,7 +88,7 @@ public class LoginScripts : MonoBehaviour {
                     print("Nope");
                 }
                
-            }
+            }*/
 
         }
         catch (WebException ex)
