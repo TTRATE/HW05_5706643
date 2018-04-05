@@ -3,9 +3,9 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host: '-----',
+    host: 'pannawatdata.ck2codzcnj4m.ap-southeast-1.rds.amazonaws.com',
     user: 'pannawat',
-    password: '****',
+    password: 'ttr987654321',
     database: 'HW05_IDdata'
 
 });
@@ -37,9 +37,9 @@ app.get('/user/id',function(req,res){
     })
 })
 
-app.get('/user/login/name',function(req,res){
+app.get('/user/login/:name',function(req,res){
 
-    var login =req.query.userID;
+    var login =req.params.name;
 
     LoginUserID(login,function(err,resualt){
         res.end(resualt);
@@ -68,7 +68,7 @@ function AddUserID(ID, callback) {
     });
 }
     function ShowUserID(callback) {
-        var sql = 'SELECT * FROM user ORDER BY score DESC';
+        var sql = 'SELECT userID,score FROM user ORDER BY score DESC limit 5';
 
 
         connection.query(sql, function (err,rows,fields) {
@@ -79,16 +79,14 @@ function AddUserID(ID, callback) {
         callback(null,json);
     });
     }
-    function LoginUserID(namelog,callback) {
-        var sql = 'SELECT userID FROM user WHERE userID = ?';
-
-        
-        connection.query(sql,namelog, function (err,rows,fields) {
+    function LoginUserID(name,callback) {
+        var json = '';
+        var sql = 'SELECT userID,password FROM user WHERE userID = ?'
+        connection.query(sql,[name], function (err, rows, fields) {
             if (err) throw err;
-
-        json = JSON.stringify(rows);
-
-        callback(null,json);
-        
-    });
+    
+            json = JSON.stringify(rows);
+    
+            callback(null,json);
+        });
     }
