@@ -24,24 +24,27 @@ app.get('/user/add', function (req, res) {
     var password = req.query.password;
     var score = req.query.score;
 
-    var ID = [[userID, password,score]];
+    var ID = [[userID, password, score]];
     AddUserID(ID, function (err, resualt) {
         res.end(resualt);
     });
 
 });
-app.get('/user/id',function(req,res){
+app.get('/user/id', function (req, res) {
 
-    ShowUserID(function(err,resualt){
+    ShowUserID(function (err, resualt) {
         res.end(resualt);
     })
 })
 
-app.get('/user/login/:name',function(req,res){
+app.get('/user/login/:userID/:password', function (req, res) {
 
-    var login =req.params.name;
+    var userIDLog = req.params.userID;
+    var passwordLog = req.params.password;
 
-    LoginUserID(login,function(err,resualt){
+    //var logUser = [[userIDLog, passwordLog]];
+
+    LoginUserID(userIDLog,passwordLog, function (err, resualt) {
         res.end(resualt);
     })
 })
@@ -67,26 +70,27 @@ function AddUserID(ID, callback) {
 
     });
 }
-    function ShowUserID(callback) {
-        var sql = 'SELECT userID,score FROM user ORDER BY score DESC limit 5';
+function ShowUserID(callback) {
+    var sql = 'SELECT userID,score FROM user ORDER BY score DESC limit 5';
 
 
-        connection.query(sql, function (err,rows,fields) {
-            if (err) throw err;
+    connection.query(sql, function (err, rows, fields) {
+        if (err) throw err;
 
         json = JSON.stringify(rows);
 
-        callback(null,json);
+        callback(null, json);
     });
-    }
-    function LoginUserID(name,callback) {
-        var json = '';
-        var sql = 'SELECT userID,password FROM user WHERE userID = ?'
-        connection.query(sql,[name], function (err, rows, fields) {
-            if (err) throw err;
-    
-            json = JSON.stringify(rows);
-    
-            callback(null,json);
-        });
-    }
+}
+function LoginUserID(userIDsend,passwordsend, callback) {
+    var json = '';
+    var sql = 'SELECT count(id) FROM user WHERE userID = ? and password = ?'
+    connection.query(sql, [userIDsend,passwordsend], function (err, rows, fields) {
+        
+        if (err) throw err;
+
+        json = JSON.stringify(rows);
+
+        callback(null, json);
+    });
+}
