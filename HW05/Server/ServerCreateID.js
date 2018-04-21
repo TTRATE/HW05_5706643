@@ -83,12 +83,13 @@ function ShowUserID(callback) {
     });
 }
 function LoginUserID(userIDsend,passwordsend, callback) {
+    
     var json = '';
-    var sql = 'SELECT count(id) FROM user WHERE userID = ? and password = ?'
+    var sql = 'SELECT count(id)AS off  FROM user WHERE userID = ? and password = ?'
     connection.query(sql, [userIDsend,passwordsend], function (err, rows, fields) {
         
         if (err) throw err;
-
+        
         json = JSON.stringify(rows);
 
         callback(null, json);
