@@ -11,9 +11,9 @@ using Newtonsoft.Json.Converters;
 
 public class GameClinet : MonoBehaviour {
 
-	public string URL = "";
-
-	void Start () 
+	public string URL = "http://localhost:8081/user/login/CGM/CGM";
+    //http://localhost:8081/user/id
+    void Start () 
 	{
 		try
 		{
@@ -21,14 +21,12 @@ public class GameClinet : MonoBehaviour {
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream stream = response.GetResponseStream();
             string responseBody = new StreamReader(stream).ReadToEnd();
-
             print(responseBody);
-
-            UserID[] userIDs = JsonConvert.DeserializeObject<UserID[]>(responseBody);
-            for (int i = 0; i < userIDs.Length; i++)
-            {
-               
-            }
+            
+            
+            
+            LoginUserCheck[] userIDs = JsonConvert.DeserializeObject<LoginUserCheck[]>(responseBody); 
+            print(userIDs[0].off);
             
         }
         catch(WebException ex)

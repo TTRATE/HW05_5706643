@@ -27,14 +27,14 @@ public class LoginScripts : MonoBehaviour {
         //ldb = GameObject.FindGameObjectWithTag("nameList").GetComponent<LeaderBoardScript>();
     }
 
-    // Update is called once per frame
+   
     public void LoginToBorad()
     {
 
         userIDkey = userIDEnter.text;
         passwordkey = passwordEnter.text;
-
-        loginUser = "http://localhost:8081/user/login/" + userIDkey;
+        
+        loginUser = "http://localhost:8081/user/login/" + userIDkey + "/" + passwordkey;
         URL = loginUser;
 
         try
@@ -46,49 +46,32 @@ public class LoginScripts : MonoBehaviour {
 
             print(responseBody);
 
-           /* UserID log = JsonConvert.DeserializeObject<UserID>(responseBody);
-            print(log);*/
-            UserID[] userIDs = JsonConvert.DeserializeObject<UserID[]>(responseBody);
-            
-            if(userIDkey == userIDs[0].userID)
-            {
-                if(passwordkey == userIDs[0].password)
-                {
-                    print("True");
-                    btn.LogToBoard();
-                    ldb.ShowList();
-                }
-                else
-                {
-                    print("passF");
-                }
-                
-            }
-            else
-            {
-                print("userF");
 
-            }
+            int pass = 1;
             
+            
+           LoginUserCheck[] userIDs = JsonConvert.DeserializeObject<LoginUserCheck[]>(responseBody);
+           print(userIDs[0].off);
+             if(userIDs[0].off == 1)
+             {
+                 if(userIDs[0].off == 1)
+                 {
+                     print("True");
+                     btn.LogToBoard();
+                     ldb.ShowList();
+                 }
+                 else
+                 {
+                     print("passF");
+                 }
 
-            /*for (int i = 0; i < userIDs.Length; i++)
-            {
-               if(userIDkey == userIDs[i].userID)
-                {
-                    if(passwordkey == userIDs[i].password)
-                    {
-                        print("Wellcome");
-                        btn.LogToBoard();
-                        ldb.ShowList();
-                    }
-                   
-                }
-                else
-                {
-                    print("Nope");
-                }
-               
-            }*/
+             }
+             else
+             {
+                 print("userF");
+
+             }
+
 
         }
         catch (WebException ex)
