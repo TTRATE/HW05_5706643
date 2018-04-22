@@ -20,7 +20,7 @@ public class LeaderBoardScript : MonoBehaviour
 
 
 
-    public string URL = "http://localhost:8081/user/id";
+    public string URL = "http://ec2-52-221-196-106.ap-southeast-1.compute.amazonaws.com:8081/user/id";
 
     // Use this for initialization
     void Start ()
@@ -55,8 +55,7 @@ public class LeaderBoardScript : MonoBehaviour
                 listID.GetComponent<ListandScore>().userID.text = "" + userIDs[i].userID;
                 listID.GetComponent<ListandScore>().score.text = "" + userIDs[i].score;
 
-                /*useridText = GameObject.FindGameObjectWithTag("nameList");
-                useridText.GetComponent<Text>().text = userIDs[i].userID;*/
+         
             }          
 
         }

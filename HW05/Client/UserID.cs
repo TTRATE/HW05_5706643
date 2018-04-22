@@ -9,6 +9,7 @@ public class UserID
     public string password { get; set; }
     public int score { get; set; }
     public int id { get; set; }
+    public int off { get; set; }
     
     
 

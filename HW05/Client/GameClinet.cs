@@ -25,8 +25,7 @@ public class GameClinet : MonoBehaviour {
             
             
             
-            LoginUserCheck[] userIDs = JsonConvert.DeserializeObject<LoginUserCheck[]>(responseBody); 
-            print(userIDs[0].off);
+            
             
         }
         catch(WebException ex)

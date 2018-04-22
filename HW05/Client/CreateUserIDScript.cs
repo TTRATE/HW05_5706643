@@ -39,7 +39,7 @@ public class CreateUserIDScript : MonoBehaviour {
 
         int ranNumber = Random.Range(1, 999);
 
-        UserIDCreate = "http://localhost:8081/user/add?userID=" + EnterUserID + "&password=" + EnterPassword + "&score=" + ranNumber;
+        UserIDCreate = "http://ec2-52-221-196-106.ap-southeast-1.compute.amazonaws.com:8081/user/add?userID=" + EnterUserID + "&password=" + EnterPassword + "&score=" + ranNumber;
         URL_ADD = UserIDCreate;
 
         Debug.Log(URL_ADD);

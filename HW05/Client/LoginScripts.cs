@@ -34,7 +34,7 @@ public class LoginScripts : MonoBehaviour {
         userIDkey = userIDEnter.text;
         passwordkey = passwordEnter.text;
         
-        loginUser = "http://localhost:8081/user/login/" + userIDkey + "/" + passwordkey;
+        loginUser = "http://ec2-52-221-196-106.ap-southeast-1.compute.amazonaws.com:8081/user/login/" + userIDkey + "/" + passwordkey;
         URL = loginUser;
 
         try
@@ -50,7 +50,7 @@ public class LoginScripts : MonoBehaviour {
             int pass = 1;
             
             
-           LoginUserCheck[] userIDs = JsonConvert.DeserializeObject<LoginUserCheck[]>(responseBody);
+           UserID[] userIDs = JsonConvert.DeserializeObject<UserID[]>(responseBody);
            print(userIDs[0].off);
              if(userIDs[0].off == 1)
              {
